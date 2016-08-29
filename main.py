@@ -11,6 +11,18 @@ class Main(QtGui.QMainWindow):
 		super(Main, self).__init__()
 		self.ui = grid_ui.Ui_Form()
 		self.ui.setupUi(self)
+		self.load_grid()
+
+	def load_grid(self):
+		locales = db_control.locales()
+
+		self.data = QtGui.QStandardItemModel(len(locales), 4)
+		self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Local"))
+		self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Ciudad"))
+		self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Dirección"))
+		self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Total_empleados"))
+		self.ui.tableView.setModel(self.data)
+
 
 if __name__ == "__main__":
 	app = QtGui.QApplication(sys.argv)

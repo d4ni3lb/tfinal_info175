@@ -5,7 +5,7 @@ import sqlite3
 
 def conectar():
 #Para conectar a la base de datos
-	con = sqlite3.connect('locales.db')
+	con = sqlite3.connect('locales')
 	con.row_factory = sqlite3.Row #Propiedad row para defnir que tipo de objeto representa cada fila en los resultados del query, en este caso como Row de sqlite3
 	return con
 
@@ -14,7 +14,7 @@ def locales():
 #Mostrar en la grilla todos los locales de la bd
     con = conectar()
     c = con.cursor() #Definimos el cursor de la conexion
-    query = "SELECT * FROM local" #Definimos la query
+    query = "SELECT nombre_l AS Local ,ciudad.nombre_c AS Ciudad ,local.direccion, COUNT(nombre) AS Total_empleados FROM local ,empleado join ciudad  on local.fk_id_ciudad = ciudad.id_ciudad and  empleado.fk_id_local = local.id_local GROUP BY nombre_l;" #Definimos la query
     resultado = c.execute(query) #La ejecutamos
     locales = resultado.fetchall() #Guardamos todos los resultados en "locales"
     con.close() #Cerrar la conexion
