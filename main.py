@@ -37,6 +37,14 @@ class Main(QtGui.QWidget):
 			self.data.setData(index, row['Direccion'])
 			index = self.data.index(r, 3, QtCore.QModelIndex())
 			self.data.setData(index, row['Total_empleados'])
+            
+        self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
+        self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
+        
+        self.ui.tableView.setColumnWidth(0, 220)
+        self.ui.tableView.setColumnWidth(1, 210)
+        self.ui.tableView.setColumnWidth(2, 210)
+        self.ui.tableView.setColumnWidth(3, 100)
 
 	def load_filtered_grid1(self,text):
 		if(text!=""):
@@ -58,9 +66,19 @@ class Main(QtGui.QWidget):
 				self.data.setData(index, row['Direccion'])
 				index = self.data.index(r, 3, QtCore.QModelIndex())
 				self.data.setData(index, row['Total_empleados'])
+                
+            self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
+            self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
+            
+            self.ui.tableView.setColumnWidth(0, 220)
+            self.ui.tableView.setColumnWidth(1, 210)
+            self.ui.tableView.setColumnWidth(2, 210)
+            self.ui.tableView.setColumnWidth(3, 100)
+            
 		else:
 			self.load_grid()
-
+            
+        
 
 	def onChanged(self,text):
 		self.load_filtered_grid1(text)
