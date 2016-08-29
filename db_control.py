@@ -6,8 +6,8 @@ import sqlite3
 def conectar():
 #Para conectar a la base de datos
 	con = sqlite3.connect('locales.db')
-    con.row_factory = sqlite3.Row #Propiedad row para defnir que tipo de objeto representa cada fila en los resultados del query, en este caso como Row de sqlite3
-    return con
+	con.row_factory = sqlite3.Row #Propiedad row para defnir que tipo de objeto representa cada fila en los resultados del query, en este caso como Row de sqlite3
+	return con
 
 
 def locales():

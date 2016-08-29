@@ -6,7 +6,7 @@
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
-
+import sys
 from PySide import QtCore, QtGui
 
 class Ui_Form(object):
@@ -43,3 +43,8 @@ class Ui_Form(object):
         self.pushButton_3.setText(QtGui.QApplication.translate("Form", "PushButton", None, QtGui.QApplication.UnicodeUTF8))
         self.pushButton_4.setText(QtGui.QApplication.translate("Form", "PushButton", None, QtGui.QApplication.UnicodeUTF8))
 
+if __name__ == "__main__":
+	app = QtGui.QApplication(sys.argv)
+	mySW = ControlMainWindow()
+	mySW.show()
+	sys.exit(app.exec_())
