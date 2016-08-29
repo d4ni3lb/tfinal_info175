@@ -22,10 +22,11 @@ def locales():
 
 def locales_por_ciudad(n_ciudad):
 #Mostrar en la grilla los locales cuya ciudad coincida con la indicada en el argumento
-    con = conectar()
-    c = con.cursor()
-    query = "SELECT nombre_l,ciudad.nombre_c FROM local JOIN ciudad on local.fk_id_ciudad = ciudad.id_ciudad WHERE ciudad.nombre_c LIKE ?"
-    resultado = c.execute(query, n_ciudad) #Ejecutamos la query
-    locales_ciudad = resultado.fetchall() #Guardamos todos los resultados
-    con.close() #Cerramos la conexion
-    return locales_ciudad
+	con = conectar()
+	c = con.cursor()
+	n_ciudad = "%"+n_ciudad+"%"
+	query = "SELECT nombre_l AS Local ,ciudad.nombre_c AS Ciudad ,local.direccion, COUNT(nombre) AS Total_empleados FROM local ,empleado join ciudad  on local.fk_id_ciudad = ciudad.id_ciudad and  empleado.fk_id_local = local.id_local WHERE ciudad.nombre_c LIKE ? GROUP BY nombre_l"
+	resultado = c.execute(query, [n_ciudad]) #Ejecutamos la query
+	locales_ciudad = resultado.fetchall() #Guardamos todos los resultados
+	con.close() #Cerramos la conexion
+	return locales_ciudad
