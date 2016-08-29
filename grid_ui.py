@@ -43,6 +43,14 @@ class Ui_Form(object):
         self.tableView.setObjectName("tableView")
         self.verticalLayout.addWidget(self.tableView)
 
+        filtros = [
+            {"id": "0", "name": "----"},
+            {"id": "1", "name": "Ciudad"},
+            {"id": "2", "name": "Region"}]
+
+        for element in filtros:
+            self.cb_filtro.addItem(element["name"],element["id"])
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
