@@ -67,13 +67,13 @@ class Main(QtGui.QWidget):
 				index = self.data.index(r, 3, QtCore.QModelIndex())
 				self.data.setData(index, row['Total_empleados'])
                 
-            self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
-            self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
+			self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
+			self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
             
-            self.ui.tableView.setColumnWidth(0, 220)
-            self.ui.tableView.setColumnWidth(1, 210)
-            self.ui.tableView.setColumnWidth(2, 210)
-            self.ui.tableView.setColumnWidth(3, 100)
+			self.ui.tableView.setColumnWidth(0, 220)
+			self.ui.tableView.setColumnWidth(1, 210)
+			self.ui.tableView.setColumnWidth(2, 210)
+			self.ui.tableView.setColumnWidth(3, 100)
             
 		else:
 			self.load_grid()
