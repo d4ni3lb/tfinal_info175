@@ -30,3 +30,11 @@ def locales_por_ciudad(n_ciudad):
 	locales_ciudad = resultado.fetchall() #Guardamos todos los resultados
 	con.close() #Cerramos la conexion
 	return locales_ciudad
+
+def obtener_usuarios():
+#Devuelve la lista de usuarios y sus respectivas contraseñas para el login
+	c = conectar()
+	query = "SELECT * FROM usuarios"
+	resultado = c.execute(query)
+	usuarios = resultado.fetchall()
+	return usuarios

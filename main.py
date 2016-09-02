@@ -2,90 +2,47 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import login_ui
 import db_control
-import grid_ui
+import abrir_locales
 from PySide import QtGui, QtCore
 
 class Main(QtGui.QWidget):
+    
     def __init__(self):
         super(Main, self).__init__()
-        self.ui = grid_ui.Ui_Form()
+        self.ui = login_ui.Ui_Form()
+        self.isLoged = False
         self.ui.setupUi(self)
-        self.connect_signals()
-        self.load_grid()
+        self.connect_actions()
 
 
-    def connect_signals(self):
-        self.ui.buscador.textChanged.connect(self.onChanged)
+    def connect_actions(self):
+        self.ui.pushButton.clicked.connect(self.action_aceptar)
+        self.ui.pushButton_2.clicked.connect(self.action_cancelar)
 
-    def load_grid(self):
-        locales = db_control.locales()
-        self.data = QtGui.QStandardItemModel(len(locales), 4)
-        self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Local"))
-        self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Ciudad"))
-        self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Dirección"))
-        self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Total_empleados"))
-        
-        for r, row in enumerate(locales):
-            index = self.data.index(r, 0, QtCore.QModelIndex())
-            self.data.setData(index, row['Local'])
-            index = self.data.index(r, 1, QtCore.QModelIndex())
-            self.data.setData(index, row['Ciudad'])
-            index = self.data.index(r, 2, QtCore.QModelIndex())
-            self.data.setData(index, row['Direccion'])
-            index = self.data.index(r, 3, QtCore.QModelIndex())
-            self.data.setData(index, row['Total_empleados'])
-            
-        self.ui.tableView.setModel(self.data)
-        
-        self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
-        self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
-        
-        self.ui.tableView.setColumnWidth(0, 220)
-        self.ui.tableView.setColumnWidth(1, 210)
-        self.ui.tableView.setColumnWidth(2, 210)
-        self.ui.tableView.setColumnWidth(3, 100)
-        
-    def load_filtered_grid1(self,text):
-        if(text!=""):
-            locales = db_control.locales_por_ciudad(text)
-            
-            self.data = QtGui.QStandardItemModel(len(locales), 4)
-            self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Local"))
-            self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Ciudad"))
-            self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Dirección"))
-            self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Total_empleados"))
-            
-            for r, row in enumerate(locales):
-                index = self.data.index(r, 0, QtCore.QModelIndex())
-                self.data.setData(index, row['Local'])
-                index = self.data.index(r, 1, QtCore.QModelIndex())
-                self.data.setData(index, row['Ciudad'])
-                index = self.data.index(r, 2, QtCore.QModelIndex())
-                self.data.setData(index, row['Direccion'])
-                index = self.data.index(r, 3, QtCore.QModelIndex())
-                self.data.setData(index, row['Total_empleados'])
-                
-            self.ui.tableView.setModel(self.data)
-            
-            self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
-            self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
-            
-            self.ui.tableView.setColumnWidth(0, 220)
-            self.ui.tableView.setColumnWidth(1, 210)
-            self.ui.tableView.setColumnWidth(2, 210)
-            self.ui.tableView.setColumnWidth(3, 100)
-            
+    def action_cancelar(self):
+        exit()
+
+    def action_aceptar(self):
+        datos = db_control.obtener_usuarios()
+        for row in datos:
+            if(row['username']==str(self.ui.lineEdit.text()) and row['pass']==str(self.ui.lineEdit_2.text())):
+                self.isLoged=True
+        if(self.isLoged):
+            print("Login exitoso")
+            self.setVisible(False)
+            self.ventana_locales = abrir_locales.Locales()
+            self.ventana_locales.show()
+
+
         else:
-            self.load_grid()
-            
-    def onChanged(self,text):
-        self.load_filtered_grid1(text)
-		
+            self.msgBox = QtGui.QMessageBox()
+            self.msgBox.setText(u"Nombre de usuario o contraseña no válidos.")
+            self.msgBox.exec_()
 
 if __name__ == "__main__":
-	app = QtGui.QApplication(sys.argv)
-	main = Main()
-	main.show()
-	main.show()
-	sys.exit(app.exec_())
+    app = QtGui.QApplication(sys.argv)
+    main = Main()
+    main.show()
+    sys.exit(app.exec_())
