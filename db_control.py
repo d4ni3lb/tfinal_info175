@@ -38,3 +38,13 @@ def obtener_usuarios():
 	resultado = c.execute(query)
 	usuarios = resultado.fetchall()
 	return usuarios
+
+def empleados():
+#Mostrar en la grilla todos los locales de la bd
+    con = conectar()
+    c = con.cursor() #Definimos el cursor de la conexion
+    query = "SELECT * FROM empleado" #Definimos la query
+    resultado = c.execute(query) #La ejecutamos
+    empleados = resultado.fetchall() #Guardamos todos los resultados en "locales"
+    con.close() #Cerrar la conexion
+    return empleados
