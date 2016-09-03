@@ -4,6 +4,7 @@
 import sys
 import db_control
 import locales_ui
+import abrir_empleados
 from PySide import QtGui, QtCore
 
 class Locales(QtGui.QWidget):
@@ -17,6 +18,7 @@ class Locales(QtGui.QWidget):
 
     def connect_signals(self):
         self.ui.buscador.textChanged.connect(self.onChanged)
+        self.ui.irEmpleados.clicked.connect(self.boton_empleados)
 
     def load_grid(self):
         locales = db_control.locales()
@@ -81,6 +83,11 @@ class Locales(QtGui.QWidget):
             
     def onChanged(self,text):
         self.load_filtered_grid1(text)
+
+    def boton_empleados(self):
+            self.ventana_empleados = abrir_empleados.Empleados()
+            self.ventana_empleados.show()
+            self.close()
 		
 
 if __name__ == "__main__":
