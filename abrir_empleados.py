@@ -4,6 +4,7 @@
 import sys
 import db_control
 import empleados_ui
+import abrir_locales
 from PySide import QtGui, QtCore
 
 class Empleados(QtGui.QWidget):
@@ -15,14 +16,18 @@ class Empleados(QtGui.QWidget):
         self.load_grid()
 
     def connect_signals(self):
-        print("conexion botones")
-        #Conexiones de los botones y widgets
+        self.ui.irLocales.clicked.connect(self.boton_locales)
+        #Conexiones de los botones y widgets 
 
 
     def load_grid(self):
         empleados = db_control.empleados()
         #Algoritmo que muestra los datos en la grilla
 
+    def boton_locales(self):
+        self.ventana_locales = abrir_locales.Locales()
+        self.ventana_locales.show()
+        self.close()
 
 
 if __name__ == "__main__":
