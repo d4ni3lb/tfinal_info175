@@ -20,6 +20,16 @@ def locales():
     con.close() #Cerrar la conexion
     return locales
 
+def obtenerLocalId(id):
+        #Metodo para obtener un local especifico a traves de su ID'''
+        con = conectar()
+        c=con.cursor()
+	query = "SELECT * FROM local WHERE id_local = ?"
+	resultado = c.execute(query, [id])
+	local = resultado.fetchall()
+	con.close()
+	return local
+
 def locales_por_ciudad(n_ciudad):
 #Mostrar en la grilla los locales cuya ciudad coincida con la indicada en el argumento
 	con = conectar()
