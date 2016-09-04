@@ -5,6 +5,7 @@ import sys
 import db_control
 import locales_ui
 import abrir_empleados
+import abrir_form_local
 from PySide import QtGui, QtCore
 
 class Locales(QtGui.QWidget):
@@ -19,6 +20,8 @@ class Locales(QtGui.QWidget):
     def connect_signals(self):
         self.ui.buscador.textChanged.connect(self.onChanged)
         self.ui.irEmpleados.clicked.connect(self.boton_empleados)
+        self.ui.botonNuevoL.clicked.connect(self.boton_nLocal)
+        self.ui.botonEditar.clicked.connect(self.boton_editarLocal)
 
     def load_grid(self):
         locales = db_control.locales()
@@ -88,6 +91,28 @@ class Locales(QtGui.QWidget):
             self.ventana_empleados = abrir_empleados.Empleados()
             self.ventana_empleados.show()
             self.close()
+
+    def boton_nLocal(self):
+        '''Metodo para lanzar el formulario de creacion del nuevo local'''
+        self.ventana_formularioL = abrir_form_local.FormularioLocales()
+        self.ventana_formularioL.reloadT.connect(self.load_grid)
+        self.ventana_formularioL.exec_()
+
+    def boton_editarLocal(self):
+        '''Método usado para editar un local seleccionado desde la grilla'''
+        index = self.ui.tableView.currentIndex()
+        if index.row() == -1: #No se ha seleccionado producto
+            msgBox = QtGui.QMessageBox()
+            msgBox.setWindowTitle("Error")
+            msgBox.setText("Debe seleccionar un local.")
+            msgBox.exec_()
+            return False
+        else:
+            model = self.ui.tableView.model()
+            id = model.index(index.row(), 8, QtCore.QModelIndex()).data()
+            self.ventana_editarL = abrir_form_local.FormularioLocales(id)
+            self.ventana_editarL.reloadT.connect(self.load_grid)
+            self.ventana_editarL.exec_()
 		
 
 if __name__ == "__main__":
