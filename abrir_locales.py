@@ -22,23 +22,27 @@ class Locales(QtGui.QWidget):
         self.ui.irEmpleados.clicked.connect(self.boton_empleados)
         self.ui.botonNuevoL.clicked.connect(self.boton_nLocal)
         self.ui.botonEditar.clicked.connect(self.boton_editarLocal)
+        self.ui.botonEliminar.clicked.connect(self.boton_eliminar_local)
 
     def load_grid(self):
         locales = db_control.locales()
-        self.data = QtGui.QStandardItemModel(len(locales), 4)
-        self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Local"))
-        self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Ciudad"))
-        self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Dirección"))
-        self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Total_empleados"))
+        self.data = QtGui.QStandardItemModel(len(locales), 5)
+        self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Id"))
+        self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Local"))
+        self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Ciudad"))
+        self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Dirección"))
+        self.data.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Total_empleados"))
         
         for r, row in enumerate(locales):
             index = self.data.index(r, 0, QtCore.QModelIndex())
-            self.data.setData(index, row['Local'])
+            self.data.setData(index, row['id_local'])
             index = self.data.index(r, 1, QtCore.QModelIndex())
-            self.data.setData(index, row['Ciudad'])
+            self.data.setData(index, row['Local'])
             index = self.data.index(r, 2, QtCore.QModelIndex())
-            self.data.setData(index, row['Direccion'])
+            self.data.setData(index, row['Ciudad'])
             index = self.data.index(r, 3, QtCore.QModelIndex())
+            self.data.setData(index, row['Direccion'])
+            index = self.data.index(r, 4, QtCore.QModelIndex())
             self.data.setData(index, row['Total_empleados'])
             
         self.ui.tableView.setModel(self.data)
@@ -46,29 +50,33 @@ class Locales(QtGui.QWidget):
         self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
         self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
         
-        self.ui.tableView.setColumnWidth(0, 220)
-        self.ui.tableView.setColumnWidth(1, 210)
+        self.ui.tableView.setColumnWidth(0, 50)
+        self.ui.tableView.setColumnWidth(1, 220)
         self.ui.tableView.setColumnWidth(2, 210)
-        self.ui.tableView.setColumnWidth(3, 100)
+        self.ui.tableView.setColumnWidth(3, 210)
+        self.ui.tableView.setColumnWidth(4, 100)
         
     def load_filtered_grid1(self,text):
         if(text!=""):
             locales = db_control.locales_por_ciudad(text)
             
-            self.data = QtGui.QStandardItemModel(len(locales), 4)
-            self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Local"))
-            self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Ciudad"))
-            self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Dirección"))
-            self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Total_empleados"))
+            self.data = QtGui.QStandardItemModel(len(locales), 5)
+            self.data.setHorizontalHeaderItem(0, QtGui.QStandardItem(u"Id"))
+            self.data.setHorizontalHeaderItem(1, QtGui.QStandardItem(u"Local"))
+            self.data.setHorizontalHeaderItem(2, QtGui.QStandardItem(u"Ciudad"))
+            self.data.setHorizontalHeaderItem(3, QtGui.QStandardItem(u"Dirección"))
+            self.data.setHorizontalHeaderItem(4, QtGui.QStandardItem(u"Total_empleados"))
             
             for r, row in enumerate(locales):
                 index = self.data.index(r, 0, QtCore.QModelIndex())
-                self.data.setData(index, row['Local'])
+                self.data.setData(index, row['id_local'])
                 index = self.data.index(r, 1, QtCore.QModelIndex())
-                self.data.setData(index, row['Ciudad'])
+                self.data.setData(index, row['Local'])
                 index = self.data.index(r, 2, QtCore.QModelIndex())
-                self.data.setData(index, row['Direccion'])
+                self.data.setData(index, row['Ciudad'])
                 index = self.data.index(r, 3, QtCore.QModelIndex())
+                self.data.setData(index, row['Direccion'])
+                index = self.data.index(r, 4, QtCore.QModelIndex())
                 self.data.setData(index, row['Total_empleados'])
                 
             self.ui.tableView.setModel(self.data)
@@ -76,18 +84,21 @@ class Locales(QtGui.QWidget):
             self.ui.tableView.horizontalHeader().setResizeMode(1, self.ui.tableView.horizontalHeader().Stretch)
             self.ui.tableView.horizontalHeader().setResizeMode(2, self.ui.tableView.horizontalHeader().Stretch)
             
-            self.ui.tableView.setColumnWidth(0, 220)
-            self.ui.tableView.setColumnWidth(1, 210)
+            self.ui.tableView.setColumnWidth(0, 50)
+            self.ui.tableView.setColumnWidth(1, 220)
             self.ui.tableView.setColumnWidth(2, 210)
-            self.ui.tableView.setColumnWidth(3, 100)
+            self.ui.tableView.setColumnWidth(3, 210)
+            self.ui.tableView.setColumnWidth(4, 100)
             
         else:
             self.load_grid()
             
     def onChanged(self,text):
+
         self.load_filtered_grid1(text)
 
     def boton_empleados(self):
+
             self.ventana_empleados = abrir_empleados.Empleados()
             self.ventana_empleados.show()
             self.close()
@@ -114,6 +125,32 @@ class Locales(QtGui.QWidget):
             self.ventana_editarL.reloadT.connect(self.load_grid)
             self.ventana_editarL.exec_()
 		
+    def boton_eliminar_local(self):
+
+        data = self.ui.tableView.model()
+        index = self.ui.tableView.currentIndex()
+
+        if index.row() == -1:  # No se ha seleccionado una fila
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.showMessage(u"Debe seleccionar una fila")
+            return False
+        else:
+            id_local = data.index(index.row(), 0, QtCore.QModelIndex()).data()
+            print(id_local)
+            if (db_control.borrar_local(id_local)):
+                self.load_grid()
+                msgBox = QtGui.QMessageBox()
+                msgBox.setText(u"EL registro fue eliminado.")
+                msgBox.exec_()
+                return True
+            else:
+                self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
+                self.ui.errorMessageDialog.showMessage(
+                    u"Error al eliminar el registro")
+                return False
+
+
+
 
 if __name__ == "__main__":
 	app = QtGui.QApplication(sys.argv)
