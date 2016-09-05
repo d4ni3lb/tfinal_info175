@@ -3,6 +3,7 @@
 import os
 import sys
 import db_control
+import validador
 import form_local_ui
 from PySide import QtGui, QtCore
 
@@ -40,62 +41,36 @@ class FormularioLocales(QtGui.QDialog):
         exit()
 
     def action_aceptar(self):
-        nombre = str(self.ui.lineNombreL.text())
-        direccion = str(self.ui.linedireccion.text())
-        ciudad = str(self.ui..currentText())
-        peso = self.ui.peso_auto.text()
-        if(self.change_image):
-            autos = controller.getAutos()
-            autosIds = [0]
-            for i in autos:
-                actual = int(i['id_auto'])
-                autosIds.append(actual)
-        else:
-            if(self.id==0):
-                imagen = "0"
-                else:
-                    imagen = str(self.id)+".jpg"
-                    fecha_creacion = str(self.ui.cb_creacion_auto.currentIndex()+1919)
-                    fk_id_marca = self.ui.marca_auto.currentIndex()
-                    fk_id_tipo = 0
-                    datos = controller.getTipos()
-                    tiposBD = ["----"]
-                    for i in datos:
-                        actual = [str(i['nombre'])]
-                        tiposBD.append(actual)
-                    tipo = str(self.ui.tipo_auto.text())
-                    for i,tipoBD in enumerate(tiposBD):
-                        if (tipoBD[0] == tipo):
-                            fk_id_tipo = i
-                    if (fk_id_tipo == 0):
-                        controller.agregarInfoTipos(tipo,int(self.ui.sb_n_puertas.value()))
-                    datos = controller.getTipos()
-                    tiposBD = ["----"]
-                    for i in datos:
-                        actual = [str(i['nombre'])]
-                        tiposBD.append(actual)
-                    tipo = str(self.ui.tipo_auto.text())
-                    for i,tipoBD in enumerate(tiposBD):
-                        if (tipoBD[0] == tipo):
-                            fk_id_tipo = i
+        nombre = unicode(self.ui.line_nombre_local.text())
+        direccion = unicode(self.ui.line_direccion.text())
+        ciudad = unicode(self.ui.box_ciudad.currentText())
+        fk_id_ciudad = self.ui.box_ciudad.currentIndex()
+        fk_id_region = self.ui.box_region.currentIndex()
 
-                    Valida= General_Utils.validaDatos(modelo, color, motor, peso, descripcion, rendimiento, imagen, fecha_creacion)
-                    print Valida
-                    if(Valida!="Campos Incorrectos:"):
-                        self.errorMessageDialog = QtGui.QErrorMessage(self)
-                        self.errorMessageDialog.setWindowTitle("ERROR")
-                        self.errorMessageDialog.showMessage(Valida)
-                    if(Valida=="Campos Incorrectos:"):
-                        rendimiento=int(rendimiento)
-                        peso=int(peso)
-                        if self.identificador == False:
-                            controller.agregarInfoAutos(modelo, color, motor, peso, descripcion, rendimiento, imagen, fecha_creacion, fk_id_tipo, fk_id_marca)
-                            self.setVisible(False)
-                        else:
-                            controller.editarInfoAutos(self.id, modelo, color, motor, peso, descripcion, rendimiento, imagen, fecha_creacion, fk_id_tipo, fk_id_marca)
-                            self.setVisible(False)
-                    self.reloadT.emit()
+        if(fk_id_ciudad == 0):
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.setWindowTitle("ERROR")
+            self.errorMessageDialog.showMessage("Debe elegir ciudad")
 
+        if(fk_id_region == 0):
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.setWindowTitle("ERROR")
+            self.errorMessageDialog.showMessage(u"Debe elegir región")
+
+        valido= validador.valida_datos(nombre, direccion)
+        print valido
+        if(valido!="Campos Incorrectos:"):
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.setWindowTitle("ERROR")
+            self.errorMessageDialog.showMessage(valido)
+        if(valido=="Campos Incorrectos:"):
+            if self.identificador == False:
+                db_control.agregar_local(nombre,direccion,fk_id_ciudad)
+                self.setVisible(False)
+            else:
+                db_control.editar_local(nombre,direccion,fk_id_ciudad)
+                self.setVisible(False)
+        self.reloadT.emit()
         
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
