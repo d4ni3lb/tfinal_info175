@@ -73,3 +73,23 @@ def borrar_local(id_local):
         print "Error:", e.args[0]
     con.close()
     return exito
+
+def agregar_local(nombre, direccion, fk_id_ciudad):
+    """
+    Método que permite agregar un local a la base de datos
+    """
+    con = conectar()
+    c = con.cursor()
+    c.execute('''INSERT INTO local(nombre, direccion, fk_id_ciudad)
+					VALUES(?, ?, ? );''',(nombre, direccion, fk_id_ciudad))
+    con.commit()
+
+def editar_local(id, nombre, direccion, fk_id_local):
+    """
+    Método que permite editar un local en la base de datos
+    """
+    con = conectar()
+    c=con.cursor()
+    query = "UPDATE locale SET nombre = ?,direccion = ?, fk_id_local = ? WHERE id_local = ?"
+    c.execute(query, [nombre,direccion,fk_id_local,id])
+    con.commit()
