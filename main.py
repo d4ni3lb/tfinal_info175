@@ -30,7 +30,6 @@ class Main(QtGui.QWidget):
             if(row['username']==str(self.ui.lineEdit.text()) and row['pass']==str(self.ui.lineEdit_2.text())):
                 self.isLoged=True
         if(self.isLoged):
-            print("Login exitoso")
             self.setVisible(False)
             self.ventana_locales = abrir_locales.Locales()
             self.ventana_locales.show()

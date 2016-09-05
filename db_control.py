@@ -35,7 +35,7 @@ def locales_por_ciudad(n_ciudad):
     con = conectar()
     c = con.cursor()
     n_ciudad = "%"+n_ciudad+"%"
-    query = "SELECT nombre_l AS Local ,ciudad.nombre_c AS Ciudad ,local.direccion, COUNT(nombre) AS Total_empleados FROM local inner join ciudad ON local.fk_id_ciudad = ciudad.id_ciudad left join empleado ON empleado.fk_id_local = local.id_local WHERE ciudad.nombre_c LIKE ? GROUP BY nombre_l;"
+    query = "SELECT id_local, nombre_l AS Local ,ciudad.nombre_c AS Ciudad ,local.direccion, COUNT(nombre) AS Total_empleados FROM local inner join ciudad ON local.fk_id_ciudad = ciudad.id_ciudad left join empleado ON empleado.fk_id_local = local.id_local WHERE ciudad.nombre_c LIKE ? GROUP BY nombre_l;"
     resultado = c.execute(query, [n_ciudad]) #Ejecutamos la query
     locales_ciudad = resultado.fetchall() #Guardamos todos los resultados
     con.close() #Cerramos la conexion
@@ -66,6 +66,21 @@ def borrar_local(id_local):
     query = "DELETE FROM local WHERE id_local = ?"
     try:
         resultado = c.execute(query, [id_local])
+        con.commit()
+        exito = True
+    except sqlite3.Error as e:
+        exito = False
+        print "Error:", e.args[0]
+    con.close()
+    return exito
+
+def borrar_empleado(rut):
+    exito = False
+    con = conectar()
+    c = con.cursor()
+    query = "DELETE FROM empleado WHERE rut = ?"
+    try:
+        resultado = c.execute(query, [rut])
         con.commit()
         exito = True
     except sqlite3.Error as e:

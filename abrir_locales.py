@@ -94,8 +94,9 @@ class Locales(QtGui.QWidget):
             self.load_grid()
             
     def onChanged(self,text):
-
-        self.load_filtered_grid1(text)
+        cb_index = self.ui.cb_filtro.currentIndex()
+        if(cb_index == 1):
+            self.load_filtered_grid1(text)
 
     def boton_empleados(self):
 
@@ -136,7 +137,6 @@ class Locales(QtGui.QWidget):
             return False
         else:
             id_local = data.index(index.row(), 0, QtCore.QModelIndex()).data()
-            print(id_local)
             if (db_control.borrar_local(id_local)):
                 self.load_grid()
                 msgBox = QtGui.QMessageBox()

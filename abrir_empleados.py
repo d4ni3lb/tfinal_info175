@@ -17,6 +17,7 @@ class Empleados(QtGui.QWidget):
 
     def connect_signals(self):
         self.ui.irLocales.clicked.connect(self.boton_locales)
+        self.ui.eliminarEmpleado.clicked.connect(self.boton_eliminar_empleado)
         #Conexiones de los botones y widgets 
 
 
@@ -61,6 +62,29 @@ class Empleados(QtGui.QWidget):
         self.ventana_locales = abrir_locales.Locales()
         self.ventana_locales.show()
         self.close()
+
+    def boton_eliminar_empleado(self):
+
+        data = self.ui.grillaEmpleados.model()
+        index = self.ui.grillaEmpleados.currentIndex()
+
+        if index.row() == -1:  # No se ha seleccionado una fila
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.showMessage(u"Debe seleccionar una fila")
+            return False
+        else:
+            rut = data.index(index.row(), 0, QtCore.QModelIndex()).data()
+            if (db_control.borrar_empleado(rut)):
+                self.load_grid()
+                msgBox = QtGui.QMessageBox()
+                msgBox.setText(u"EL registro fue eliminado.")
+                msgBox.exec_()
+                return True
+            else:
+                self.ui.errorMessageDialog = QtGui.QErrorMessage(self)
+                self.ui.errorMessageDialog.showMessage(
+                    u"Error al eliminar el registro")
+                return False
 
 
 if __name__ == "__main__":
