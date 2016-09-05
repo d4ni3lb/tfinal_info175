@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'login.ui'
 #
-# Created: Thu Sep 01 10:19:42 2016
+# Created: Mon Sep 05 15:55:45 2016
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -31,6 +31,10 @@ class Ui_Form(object):
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
         self.lineEdit_2 = QtGui.QLineEdit(Form)
+        font = QtGui.QFont()
+        font.setPointSize(5)
+        self.lineEdit_2.setFont(font)
+        self.lineEdit_2.setEchoMode(QtGui.QLineEdit.Password)
         self.lineEdit_2.setObjectName("lineEdit_2")
         self.gridLayout.addWidget(self.lineEdit_2, 1, 1, 1, 3)
         self.pushButton_2 = QtGui.QPushButton(Form)
