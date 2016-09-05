@@ -3,7 +3,7 @@
 import os
 import sys
 import db_control
-import validador
+#import validador
 import form_local_ui
 from PySide import QtGui, QtCore
 
@@ -46,17 +46,48 @@ class FormularioLocales(QtGui.QDialog):
         ciudad = unicode(self.ui.box_ciudad.currentText())
         fk_id_ciudad = self.ui.box_ciudad.currentIndex()
         fk_id_region = self.ui.box_region.currentIndex()
+        valido = True
 
         if(fk_id_ciudad == 0):
             self.errorMessageDialog = QtGui.QErrorMessage(self)
             self.errorMessageDialog.setWindowTitle("ERROR")
             self.errorMessageDialog.showMessage("Debe elegir ciudad")
+            valido = False
 
         if(fk_id_region == 0):
             self.errorMessageDialog = QtGui.QErrorMessage(self)
             self.errorMessageDialog.setWindowTitle("ERROR")
             self.errorMessageDialog.showMessage(u"Debe elegir región")
+            valido = False
 
+        if (nombre == ""):
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.setWindowTitle("ERROR")
+            self.errorMessageDialog.showMessage(u"Ingrese el nombre")
+            valido = False
+
+        if (direccion == ""):
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.setWindowTitle("ERROR")
+            self.errorMessageDialog.showMessage(u"Ingrese la dirección")
+            valido = False
+
+
+        print valido
+
+        if(valido == False):
+            self.errorMessageDialog = QtGui.QErrorMessage(self)
+            self.errorMessageDialog.setWindowTitle("ERROR")
+            self.errorMessageDialog.showMessage(u"Error al validar formulario")
+        if(valido):
+            if self.identificador == False:
+                db_control.agregar_local(nombre,direccion,fk_id_ciudad)
+                self.setVisible(False)
+            else:
+                db_control.editar_local(nombre,direccion,fk_id_ciudad)
+                self.setVisible(False)
+        self.reloadT.emit()
+"""
         valido= validador.valida_datos(nombre, direccion)
         print valido
         if(valido!="Campos Incorrectos:"):
@@ -65,13 +96,13 @@ class FormularioLocales(QtGui.QDialog):
             self.errorMessageDialog.showMessage(valido)
         if(valido=="Campos Incorrectos:"):
             if self.identificador == False:
-                db_control.agregar_local(nombre,direccion,fk_id_ciudad)
+                ------db_control.agregar_local(nombre,direccion,fk_id_ciudad)
                 self.setVisible(False)
             else:
                 db_control.editar_local(nombre,direccion,fk_id_ciudad)
                 self.setVisible(False)
         self.reloadT.emit()
-        
+        """
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     form_locales = FormularioLocales()

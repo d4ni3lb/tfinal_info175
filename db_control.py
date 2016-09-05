@@ -80,8 +80,7 @@ def agregar_local(nombre, direccion, fk_id_ciudad):
     """
     con = conectar()
     c = con.cursor()
-    c.execute('''INSERT INTO local(nombre, direccion, fk_id_ciudad)
-					VALUES(?, ?, ? );''',(nombre, direccion, fk_id_ciudad))
+    c.execute("INSERT INTO local (nombre_l, direccion, fk_id_ciudad) VALUES(?, ?, ? )", (nombre, direccion, fk_id_ciudad))
     con.commit()
 
 def editar_local(id, nombre, direccion, fk_id_local):
