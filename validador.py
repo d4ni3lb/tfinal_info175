@@ -10,7 +10,7 @@ import os
 def valida_datos(nombre, direccion):
     '''Valida cada uno de los datos que se ingresan y devuelve una cadena string con los errores que tiene cada campo'''
     valida_nombre = valida_text(nombre, 'no_simbolos')
-    valida_direccion = valida_text(direccion, 'texto')
+    valida_direccion = valida_text(direccion, 'no_simbolos')
     error="Campos Incorrectos:"
     if(valida_nombre==False):
         nom="*Nombre"
