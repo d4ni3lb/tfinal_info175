@@ -16,7 +16,7 @@ def valida_datos(nombre, direccion):
         nom="*Nombre"
         error=error+nom
     if(valida_direccion==False):
-        direccion=u"*Dirección"
+        direccion="*Direccion"
         error=error+"  "+direccion
     return error
         
@@ -42,6 +42,7 @@ def valida_text(text,validacion):
 
     i=0
     StringNum=str(text)
+    
     if(len(StringNum)==0):
         Valido=False
     while(Valido and (i<len(StringNum))):
