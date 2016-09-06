@@ -66,26 +66,26 @@ class Ui_Dialog(object):
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 
-         regiones = [
-             {"id": "0", "name": "----------------------------"},
-             {"id": "1", "name": u"I Tarapacá"},
-             {"id": "2", "name": "II Antofagasta"},
-             {"id": "3", "name": "III Atacama"},
-             {"id": "4", "name": "IV Coquimbo"},
-             {"id": "5", "name": u"V Valparaíso"},
-             {"id": "6", "name": u"VI O'Higgins"},
-             {"id": "7", "name": "VII Maule"},
-             {"id": "8", "name": u"VIII Bío-Bío"},
-             {"id": "9", "name": u"IX La Araucanía"},
-             {"id": "10", "name": "X Los Lagos"},
-             {"id": "11", "name": u"XI Aysén"},
-             {"id": "12", "name": "XII Magallanes"},
-             {"id": "13", "name": "XIII Metropolitana de Santiago"},
-             {"id": "14", "name": u"XIV Los Ríos"},
-             {"id": "15", "name": "XV Arica y Parinacota"}]
+        regiones = [
+            {"id": "0", "name": "----------------------------"},
+            {"id": "1", "name": u"I Tarapacá"},
+            {"id": "2", "name": "II Antofagasta"},
+            {"id": "3", "name": "III Atacama"},
+            {"id": "4", "name": "IV Coquimbo"},
+            {"id": "5", "name": u"V Valparaíso"},
+            {"id": "6", "name": u"VI O'Higgins"},
+            {"id": "7", "name": "VII Maule"},
+            {"id": "8", "name": u"VIII Bío-Bío"},
+            {"id": "9", "name": u"IX La Araucanía"},
+            {"id": "10", "name": "X Los Lagos"},
+            {"id": "11", "name": u"XI Aysén"},
+            {"id": "12", "name": "XII Magallanes"},
+            {"id": "13", "name": "XIII Metropolitana de Santiago"},
+            {"id": "14", "name": u"XIV Los Ríos"},
+            {"id": "15", "name": "XV Arica y Parinacota"}]
 
-         for element in regiones:
-             self.box_region.addItem(element["name"],element["id"])
+        for element in regiones:
+            self.box_region.addItem(element["name"],element["id"])
 
         self.retranslateUi(Dialog)
         QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)

@@ -112,14 +112,14 @@ def agregar_local(nombre, direccion, fk_id_ciudad):
     c.execute("INSERT INTO local (nombre_l, direccion, fk_id_ciudad) VALUES(?, ?, ? )", (nombre, direccion, fk_id_ciudad))
     con.commit()
 
-def editar_local(id, nombre, direccion, fk_id_local):
+def editar_local(id, nombre, direccion):
     """
     Método que permite editar un local en la base de datos
     """
     con = conectar()
     c=con.cursor()
-    query = "UPDATE locale SET nombre = ?,direccion = ?, fk_id_local = ? WHERE id_local = ?"
-    c.execute(query, [nombre,direccion,fk_id_local,id])
+    query = "UPDATE local SET nombre_l = ?,direccion = ? WHERE id_local = ?"
+    c.execute(query, [nombre,direccion,id])
     con.commit()
 
 def editarInfoLocal(id,nombre_l,direccion,fk_id_ciudad ):

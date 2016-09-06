@@ -6,6 +6,7 @@ import db_control
 import locales_ui
 import abrir_empleados
 import abrir_form_local
+import abrir_edit_local
 from PySide import QtGui, QtCore
 
 class Locales(QtGui.QWidget):
@@ -122,7 +123,7 @@ class Locales(QtGui.QWidget):
         else:
             model = self.ui.tableView.model()
             id = model.index(index.row(), 8, QtCore.QModelIndex()).data()
-            self.ventana_editarL = abrir_form_local.FormularioLocales(id)
+            self.ventana_editarL = abrir_edit_local.FormularioLocales(id)
             self.ventana_editarL.reloadT.connect(self.load_grid)
             self.ventana_editarL.exec_()
 		
