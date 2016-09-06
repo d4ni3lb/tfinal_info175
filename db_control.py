@@ -122,4 +122,11 @@ def editar_local(id, nombre, direccion, fk_id_local):
     c.execute(query, [nombre,direccion,fk_id_local,id])
     con.commit()
 
-#CIUDADES POR REGION    
+def editarInfoLocal(id,nombre_l,direccion,fk_id_ciudad ):
+    """
+    Método que permite editar un Local en la base de datos
+    """
+    c = conectar()
+    query = "UPDATE local SET nombre_l = ?,direccion = ?, fk_id_ciudad = ?  WHERE id_local = ?"
+    c[0].execute(query, [nombre_l,direccion,fk_id_ciudad,id])
+    c[1].commit()
