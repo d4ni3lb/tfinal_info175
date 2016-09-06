@@ -11,7 +11,7 @@ def conectar():
 
 
 def locales():
-#Mostrar en la grilla todos los locales de la bd
+    #Mostrar en la grilla todos los locales de la bd
     con = conectar()
     c = con.cursor() #Definimos el cursor de la conexion
     query = "SELECT id_local, nombre_l AS Local ,ciudad.nombre_c AS Ciudad ,local.direccion, COUNT(nombre) AS Total_empleados FROM local inner join ciudad ON  local.fk_id_ciudad = ciudad.id_ciudad left join empleado ON  empleado.fk_id_local = local.id_local GROUP BY nombre_l;" #Definimos la query
@@ -21,7 +21,7 @@ def locales():
     return locales
 
 def obtenerLocalId(id):
-        #Metodo para obtener un local especifico a traves de su ID'''
+    #Metodo para obtener un local especifico a traves de su ID'''
     con = conectar()
     c=con.cursor()
     query = "SELECT * FROM local WHERE id_local = ?"
@@ -31,7 +31,7 @@ def obtenerLocalId(id):
     return local
 
 def locales_por_ciudad(n_ciudad):
-#Mostrar en la grilla los locales cuya ciudad coincida con la indicada en el argumento
+    #Mostrar en la grilla los locales cuya ciudad coincida con la indicada en el argumento
     con = conectar()
     c = con.cursor()
     n_ciudad = "%"+n_ciudad+"%"
@@ -40,6 +40,20 @@ def locales_por_ciudad(n_ciudad):
     locales_ciudad = resultado.fetchall() #Guardamos todos los resultados
     con.close() #Cerramos la conexion
     return locales_ciudad
+
+def ciudades_por_region(region):
+    #Metodo que muestra todas las ciudades que esten en la región indicada, y retorna una lista con sus nombres
+    ciudades = []
+    con = conectar()
+    c = con.cursor()
+    region = "%"+region+"%"
+    query = "SELECT id_ciudad, ciudad.nombre_c AS Local FROM local JOIN ciudad INNER JOIN region ON ciudad.fk_id_region = region.id_region WHERE region.id_region = ? GROUP by local;"
+    resultado = c.execute(query, [region]) #Ejecutamos la query
+    locales_region = resultado.fetchall() #Guardamos todos los resultados
+    con.close() #Cerramos la conexion
+    for row in locales_region:
+        ciudades.append(row[1])
+    return ciudades
 
 def obtener_usuarios():
 #Devuelve la lista de usuarios y sus respectivas contraseñas para el login
@@ -107,3 +121,5 @@ def editar_local(id, nombre, direccion, fk_id_local):
     query = "UPDATE locale SET nombre = ?,direccion = ?, fk_id_local = ? WHERE id_local = ?"
     c.execute(query, [nombre,direccion,fk_id_local,id])
     con.commit()
+
+#CIUDADES POR REGION    
