@@ -6,18 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>385</width>
+    <height>293</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Formulario local</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QWidget" name="widget" native="true">
      <layout class="QGridLayout" name="gridLayout">
-      <item row="6" column="0">
+      <item row="5" column="0">
        <widget class="QLabel" name="label_5">
         <property name="font">
          <font>
@@ -29,17 +32,13 @@
         </property>
        </widget>
       </item>
-      <item row="6" column="2">
-       <widget class="QComboBox" name="box_ciudad">
-        <property name="currentIndex">
-         <number>-1</number>
-        </property>
-       </widget>
-      </item>
-      <item row="5" column="2">
+      <item row="4" column="2">
        <widget class="QComboBox" name="box_region"/>
       </item>
-      <item row="5" column="0">
+      <item row="5" column="2">
+       <widget class="QComboBox" name="box_ciudad"/>
+      </item>
+      <item row="4" column="0">
        <widget class="QLabel" name="label_4">
         <property name="font">
          <font>
@@ -48,6 +47,18 @@
         </property>
         <property name="text">
          <string>Región:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Nombre:</string>
         </property>
        </widget>
       </item>
@@ -73,30 +84,6 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Nombre:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="label_3">
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Ciudad:</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="2">
        <widget class="QLineEdit" name="line_nombre_local">
         <property name="alignment">
@@ -104,22 +91,6 @@
         </property>
         <property name="placeholderText">
          <string>Ingrese nombre del local</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLineEdit" name="line_ciudad">
-        <property name="inputMask">
-         <string/>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-        <property name="placeholderText">
-         <string>Ingrese ciudad del local</string>
         </property>
        </widget>
       </item>
