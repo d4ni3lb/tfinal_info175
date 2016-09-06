@@ -24,3 +24,7 @@ Para ingresar escriba su nombre con la primera letra en mayúscula y de clave "1
 *Al presionar "Locales" se vuelve a la ventana de Locales.
 
 Una vez terminado de trabajar sólo hay que cerrar la ventana, la base de datos se actualiza al momento de hacer un cambio.
+
+#LIBRERIAS USADAS
+
+*se usaron las siguientes librerias : string , sys, os, pyside, sqlite3
